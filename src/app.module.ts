@@ -4,13 +4,15 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { DocentesModule } from './docentes/docentes.module';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
   imports: [
     PrismaModule,
     DocentesModule,
-    EstudiantesModule, // <-- agrega aquí
+    EstudiantesModule,
+    AuthModule, // <-- agrega aquí
   ],
 })
 export class AppModule {}
