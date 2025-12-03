@@ -9,13 +9,16 @@ import {
   Options,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { CarrerasService } from './carreras.service';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('carreras')
+@UseGuards(JwtAuthGuard)
 export class CarrerasController {
-  constructor(private readonly carrerasService: CarrerasService) {}
+  constructor(private readonly carrerasService: CarrerasService) { }
 
   @Post()
   create(@Body() data: Prisma.CarreraCreateInput) {

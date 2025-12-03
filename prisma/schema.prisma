@@ -8,55 +8,55 @@ datasource db {
 }
 
 model Usuario {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  password  String
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
 }
 
 model Docente {
-  id            Int       @id @default(autoincrement())
-  nombre        String
-  email         String    @unique
-  especialidad  Especialidad @relation(fields: [especialidadId], references: [id])
+  id             Int          @id @default(autoincrement())
+  nombre         String
+  email          String       @unique
   especialidadId Int
-  carrera       Carrera   @relation(fields: [carreraId], references: [id])
-  carreraId     Int
-  materias      Materia[]
+  carreraId      Int
+  carrera        Carrera      @relation(fields: [carreraId], references: [id])
+  especialidad   Especialidad @relation(fields: [especialidadId], references: [id])
+  materias       Materia[]
 }
 
 model Materia {
-  id        Int       @id @default(autoincrement())
-  nombre    String
-  codigo    String    @unique
-  docente   Docente   @relation(fields: [docenteId], references: [id])
-  docenteId Int
-  carrera   Carrera   @relation(fields: [carreraId], references: [id])
-  carreraId Int
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  codigo      String       @unique
+  docenteId   Int
+  carreraId   Int
+  carrera     Carrera      @relation(fields: [carreraId], references: [id])
+  docente     Docente      @relation(fields: [docenteId], references: [id])
   estudiantes Estudiante[] @relation("Inscripciones")
 }
 
 model Carrera {
-  id         Int        @id @default(autoincrement())
-  nombre     String     @unique
-  docentes   Docente[]
-  materias   Materia[]
+  id          Int          @id @default(autoincrement())
+  nombre      String       @unique
+  docentes    Docente[]
   estudiantes Estudiante[]
+  materias    Materia[]
 }
 
 model Estudiante {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   nombre    String
-  email     String  @unique
-  carrera   Carrera @relation(fields: [carreraId], references: [id])
+  email     String    @unique
   carreraId Int
-  ciclo     Ciclo   @relation(fields: [cicloId], references: [id])
   cicloId   Int
+  carrera   Carrera   @relation(fields: [carreraId], references: [id])
+  ciclo     Ciclo     @relation(fields: [cicloId], references: [id])
   materias  Materia[] @relation("Inscripciones")
 }
 
 model Ciclo {
-  id         Int          @id @default(autoincrement())
-  numero     Int
+  id          Int          @id @default(autoincrement())
+  numero      Int
   estudiantes Estudiante[]
 }
 

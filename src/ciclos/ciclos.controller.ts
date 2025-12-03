@@ -9,13 +9,16 @@ import {
   Options,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { CiclosService } from './ciclos.service';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('ciclos')
+@UseGuards(JwtAuthGuard)
 export class CiclosController {
-  constructor(private readonly ciclosService: CiclosService) {}
+  constructor(private readonly ciclosService: CiclosService) { }
 
   @Post()
   create(@Body() data: Prisma.CicloCreateInput) {
@@ -60,3 +63,4 @@ export class CiclosController {
     return;
   }
 }
+

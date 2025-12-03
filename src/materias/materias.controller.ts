@@ -9,13 +9,16 @@ import {
   Options,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { MateriasService } from './materias.service';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('materias')
+@UseGuards(JwtAuthGuard)
 export class MateriasController {
-  constructor(private readonly materiasService: MateriasService) {}
+  constructor(private readonly materiasService: MateriasService) { }
 
   @Post()
   create(@Body() data: Prisma.MateriaCreateInput) {
@@ -53,7 +56,7 @@ export class MateriasController {
       allowedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
       description: 'Rutas disponibles para /materias',
     };
-  }hg
+  }
 
   @Head()
   check() {

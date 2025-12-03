@@ -9,13 +9,16 @@ import {
   Options,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { EspecialidadesService } from './especialidades.service';
 import { Prisma } from '@prisma/client';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('especialidad')
+@UseGuards(JwtAuthGuard)
 export class EspecialidadController {
-  constructor(private readonly especialidadesService: EspecialidadesService) {}
+  constructor(private readonly especialidadesService: EspecialidadesService) { }
 
   // ✅ POST /especialidad
   @Post()
