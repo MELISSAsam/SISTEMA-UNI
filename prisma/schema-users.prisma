@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client-users"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  
+  @@map("usuarios")
+}
+
+model Rol {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique
+  
+  @@map("roles")
+}
+
+model Permiso {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique
+  
+  @@map("permisos")
+}

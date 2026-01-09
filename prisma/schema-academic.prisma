@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client-academic"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Ciclo {
+  id          Int          @id @default(autoincrement())
+  numero      Int
+  estudiantes Estudiante[]
+  
+  @@map("ciclos")
+}
+
+model Carrera {
+  id          Int          @id @default(autoincrement())
+  nombre      String       @unique
+  docentes    Docente[]
+  estudiantes Estudiante[]
+  materias    Materia[]
+  
+  @@map("carreras")
+}
+
+model Estudiante {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  email     String    @unique
+  carreraId Int
+  cicloId   Int
+  carrera   Carrera   @relation(fields: [carreraId], references: [id])
+  ciclo     Ciclo     @relation(fields: [cicloId], references: [id])
+  materias  Materia[] @relation("Inscripciones")
+  
+  @@map("estudiantes")
+}
+
+model Materia {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  codigo      String       @unique
+  docenteId   Int
+  carreraId   Int
+  carrera     Carrera      @relation(fields: [carreraId], references: [id])
+  docente     Docente      @relation(fields: [docenteId], references: [id])
+  estudiantes Estudiante[] @relation("Inscripciones")
+  
+  @@map("materias")
+}
+
+model Docente {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  email     String    @unique
+  carreraId Int
+  carrera   Carrera   @relation(fields: [carreraId], references: [id])
+  materias  Materia[]
+  
+  @@map("docentes")
+}

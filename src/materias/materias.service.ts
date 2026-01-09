@@ -1,38 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { Materia, Prisma } from '@prisma/client';
+import { MateriaSyncService } from '../services/materia-sync.service';
 
+/**
+ * Materias Service
+ * Delegates to MateriaSyncService for cross-database operations
+ */
 @Injectable()
 export class MateriasService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private materiaSync: MateriaSyncService) { }
 
-  create(data: Prisma.MateriaCreateInput): Promise<Materia> {
-    return this.prisma.materia.create({ data });
+  create(data: any) {
+    return this.materiaSync.create(data);
   }
 
-  findAll(): Promise<Materia[]> {
-    return this.prisma.materia.findMany({
-      include: { docente: true, carrera: true, estudiantes: true },
-    });
+  findAll() {
+    return this.materiaSync.findAll();
   }
 
-  findOne(id: number): Promise<Materia | null> {
-    return this.prisma.materia.findUnique({
-      where: { id },
-      include: { docente: true, carrera: true, estudiantes: true },
-    });
+  findOne(id: number) {
+    return this.materiaSync.findOne(id);
   }
 
-  update(id: number, data: Prisma.MateriaUpdateInput): Promise<Materia> {
-    return this.prisma.materia.update({
-      where: { id },
-      data,
-    });
+  update(id: number, data: any) {
+    return this.materiaSync.update(id, data);
   }
 
-  remove(id: number): Promise<Materia> {
-    return this.prisma.materia.delete({
-      where: { id },
-    });
+  remove(id: number) {
+    return this.materiaSync.remove(id);
+  }
+
+  // Assign students to materia
+  assignStudents(materiaId: number, estudianteIds: number[]) {
+    return this.materiaSync.assignStudents(materiaId, estudianteIds);
+  }
+
+  // Remove students from materia
+  removeStudents(materiaId: number, estudianteIds: number[]) {
+    return this.materiaSync.removeStudents(materiaId, estudianteIds);
   }
 }

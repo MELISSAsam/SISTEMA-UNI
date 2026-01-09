@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client-profiles"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Docente {
+  id             Int          @id @default(autoincrement())
+  nombre         String
+  email          String       @unique
+  especialidadId Int
+  carreraId      Int
+  especialidad   Especialidad @relation(fields: [especialidadId], references: [id])
+  materias       Materia[]
+  
+  @@map("docentes")
+}
+
+model Especialidad {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique
+  docentes Docente[]
+  
+  @@map("especialidades")
+}
+
+model Materia {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  codigo    String  @unique
+  docenteId Int
+  docente   Docente @relation(fields: [docenteId], references: [id])
+  
+  @@map("materias")
+}

@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaAuthService } from '../lib/prisma-auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto';
@@ -7,20 +7,32 @@ import { LoginDto } from './dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private prisma: PrismaService,
+    private prisma: PrismaAuthService,
     private jwtService: JwtService,
   ) { }
 
   async validateUser(email: string, password: string) {
-    const user = await this.prisma.usuario.findUnique({ where: { email } });
+    try {
+      const user = await this.prisma.executeWithCircuitBreaker(
+        async () => {
+          return await this.prisma.usuario.findUnique({ where: { email } });
+        },
+        'validate-user',
+      );
 
-    if (!user) throw new UnauthorizedException('Credenciales inválidas');
+      if (!user) throw new UnauthorizedException('Credenciales inválidas');
 
-    const passwordValid = await bcrypt.compare(password, user.password);
+      const passwordValid = await bcrypt.compare(password, user.password);
 
-    if (!passwordValid) throw new UnauthorizedException('Credenciales inválidas');
+      if (!passwordValid) throw new UnauthorizedException('Credenciales inválidas');
 
-    return user;
+      return user;
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        throw error;
+      }
+      throw new UnauthorizedException('Authentication service temporarily unavailable');
+    }
   }
 
   async login(loginDto: LoginDto) {
