@@ -1,0 +1,39 @@
+
+> sistema-universidad@0.0.1 seed
+> tsx prisma/seed.ts
+
+Seeding users database...
+Error during seeding: PrismaClientKnownRequestError: 
+Invalid `prisma.rol.upsert()` invocation in
+C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\prisma\seed.ts:24:40
+
+  21 console.log('Seeding users database...');
+  22 
+  23 // Upsert roles
+→ 24 const adminRole = await prisma.rol.upsert(
+The table `public.roles` does not exist in the current database.
+    at qr.handleRequestError (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:69:8172)
+    at qr.handleAndLogRequestError (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:69:7467)
+    at qr.request (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:69:7174)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async a (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:79:5816)
+    at async main (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\prisma\seed.ts:24:23) {
+  code: 'P2021',
+  meta: {
+    modelName: 'Rol',
+    driverAdapterError: DriverAdapterError: TableDoesNotExist
+        at PgTransaction.onError (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\adapter-pg\dist\index.js:687:11)
+        at PgTransaction.performIO (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\adapter-pg\dist\index.js:682:12)
+        at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at async PgTransaction.queryRaw (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\adapter-pg\dist\index.js:602:30)
+        at async C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:15:24163
+        at async fr (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:15:24002)
+        at async e.interpretNode (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:15:42384)
+        at async e.interpretNode (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:15:41603)
+        at async e.interpretNode (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:15:43982)
+        at async e.interpretNode (C:\Users\usuario\Desktop\Tercer_ciclo\Herramientas\SISTEMA-UNI\node_modules\@prisma\client-users\runtime\client.js:15:43807) {
+      cause: [Object]
+    }
+  },
+  clientVersion: '7.1.0'
+}

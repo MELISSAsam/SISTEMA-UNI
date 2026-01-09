@@ -4,6 +4,6 @@ import { defineConfig, env } from 'prisma/config'
 export default defineConfig({
     schema: 'prisma/schema-academic.prisma',
     datasource: {
-        url: env('DATABASE_URL_ACADEMIC')
+        url: env('CICLO_CARRERA_DATABASE_URL')
     },
 })

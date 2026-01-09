@@ -25,7 +25,8 @@
     "db:push:all": "npm run db:push:users && npm run db:push:academic && npm run db:push:profiles",
     "db:studio:users": "prisma studio --config prisma-users.config.ts --port 5555",
     "db:studio:academic": "prisma studio --config prisma-academic.config.ts --port 5556",
-    "db:studio:profiles": "prisma studio --config prisma-profiles.config.ts --port 5557"
+    "db:studio:profiles": "prisma studio --config prisma-profiles.config.ts --port 5557",
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -73,7 +74,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "tsx": "^4.7.0"
   },
   "jest": {
     "moduleFileExtensions": [
