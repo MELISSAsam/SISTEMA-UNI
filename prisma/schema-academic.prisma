@@ -32,6 +32,7 @@ model Estudiante {
   email     String    @unique
   carreraId Int
   cicloId   Int
+  estado    String    @default("ACTIVO") // Para "Listar todos los estudiantes activos"
   carrera   Carrera   @relation(fields: [carreraId], references: [id])
   ciclo     Ciclo     @relation(fields: [cicloId], references: [id])
   materias  Materia[] @relation("Inscripciones")
@@ -43,6 +44,7 @@ model Materia {
   id          Int          @id @default(autoincrement())
   nombre      String
   codigo      String       @unique
+  cupos       Int          @default(30) // Para control de cupos en transacción
   docenteId   Int
   carreraId   Int
   carrera     Carrera      @relation(fields: [carreraId], references: [id])
@@ -53,12 +55,14 @@ model Materia {
 }
 
 model Docente {
-  id        Int       @id @default(autoincrement())
-  nombre    String
-  email     String    @unique
-  carreraId Int
-  carrera   Carrera   @relation(fields: [carreraId], references: [id])
-  materias  Materia[]
+  id           Int       @id @default(autoincrement())
+  nombre       String
+  email        String    @unique
+  tipoContrato String    @default("TIEMPO_COMPLETO") // Para "Filtrar docentes que sean de tiempo completo"
+  estado       String    @default("ACTIVO") // Para "No estén inactivos"
+  carreraId    Int
+  carrera      Carrera   @relation(fields: [carreraId], references: [id])
+  materias     Materia[]
   
   @@map("docentes")
 }

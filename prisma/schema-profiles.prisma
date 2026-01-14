@@ -14,6 +14,8 @@ model Docente {
   email          String       @unique
   especialidadId Int
   carreraId      Int
+  tipoContrato   String       @default("TIEMPO_COMPLETO")
+  estado         String       @default("ACTIVO")
   especialidad   Especialidad @relation(fields: [especialidadId], references: [id])
   materias       Materia[]
   
