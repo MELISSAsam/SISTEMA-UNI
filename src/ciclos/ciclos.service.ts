@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { PrismaAcademicService } from '../prisma/prisma-academic.service';
 import { Ciclo, Prisma } from '@prisma/client';
 
 @Injectable()
 export class CiclosService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaAcademicService) { }
 
   create(data: Prisma.CicloCreateInput): Promise<Ciclo> {
     return this.prisma.ciclo.create({ data });

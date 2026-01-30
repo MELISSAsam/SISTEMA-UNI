@@ -3,10 +3,11 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import * as bcrypt from 'bcrypt';
+import { PrismaUsersService } from '../prisma/prisma-users.service';
 
 @Injectable()
 export class UsuariosService {
-    constructor(private prisma: PrismaService) { }
+    constructor(private prisma: PrismaUsersService) { }
 
     async create(data: CreateUsuarioDto) {
         const existingUser = await this.prisma.usuario.findUnique({

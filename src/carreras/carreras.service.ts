@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaAcademicService } from '../prisma/prisma-academic.service';
 import { Carrera, Prisma } from '@prisma/client';
 
 @Injectable()
 export class CarrerasService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaAcademicService) { }
 
   create(data: Prisma.CarreraCreateInput): Promise<Carrera> {
     return this.prisma.carrera.create({ data });

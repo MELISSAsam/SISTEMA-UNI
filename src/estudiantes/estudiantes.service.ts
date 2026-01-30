@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
 import { CreateEstudianteDto } from './dto/create-estudiante.dto';
 import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
+import { PrismaAcademicService } from '../prisma/prisma-academic.service';
 
 @Injectable()
 export class EstudiantesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaAcademicService) { }
 
   create(data: CreateEstudianteDto) {
     return this.prisma.estudiante.create({ data });

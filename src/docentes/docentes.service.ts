@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { DocenteSyncService } from '../services/docente-sync.service';
 import { CreateDocenteDto } from './dto/create-docente.dto';
 import { UpdateDocenteDto } from './dto/update-docente.dto';
+import { PrismaAcademicService } from '../prisma/prisma-academic.service';
 
 /**
  * Docentes Service
@@ -9,26 +9,41 @@ import { UpdateDocenteDto } from './dto/update-docente.dto';
  */
 @Injectable()
 export class DocentesService {
-  constructor(private docenteSync: DocenteSyncService) { }
+  constructor(private prisma: PrismaAcademicService) { }
 
   // Crear un docente
-  create(data: CreateDocenteDto) {
-    return this.docenteSync.create(data);
+  async create(data: CreateDocenteDto) {
+    // Registrar en BD académica
+    return this.prisma.docente.create({
+      data: {
+        nombre: data.nombre,
+        email: data.email,
+        carreraId: data.carreraId,
+        // especialidadId se ignora aquí o se maneja en Profiles
+      }
+    });
   }
 
   // Listar todos los docentes
   findAll() {
-    return this.docenteSync.findAll();
+    return this.prisma.docente.findMany();
   }
 
   // Buscar un docente por ID
   findOne(id: number) {
-    return this.docenteSync.findOne(id);
+    return this.prisma.docente.findUnique({ where: { id } });
   }
 
   // Actualizar un docente por ID
   update(id: number, data: UpdateDocenteDto) {
-    return this.docenteSync.update(id, data);
+    return this.prisma.docente.update({
+      where: { id },
+      data: {
+        nombre: data.nombre,
+        email: data.email,
+        carreraId: data.carreraId,
+      }
+    });
   }
 
   // Eliminar un docente por ID

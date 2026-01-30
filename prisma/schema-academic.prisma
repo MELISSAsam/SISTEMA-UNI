@@ -1,7 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../node_modules/@prisma/client-academic"
-  previewFeatures = ["driverAdapters"]
+  output   = "../generated/ciclo-carrera-client"
 }
 
 datasource db {
